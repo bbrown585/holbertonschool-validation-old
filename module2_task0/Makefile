@@ -1,9 +1,19 @@
-build: ## Generate the website from the markdown and config file in dist
-	hugo
+build: init 
 
-clean: ## Clean up the content in dist
-	rm -rf dist/*
+init: ## intialize the project repo
+    go mod init github.com/<your github handle>/awesome-api
 
-post:
-	hugo new posts/$(POST_NAME).md
-	sed -i '2s/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md >/dev/null 2>&1
+compile: ## compile source code to a binary
+    go build -o awesome-api main.go
+
+run: ## Run the app in the background and write the logs
+	./awesome-api >./awesome.log 2>&1 &
+
+stop: ## stop the app
+	kill `pgrep -f "awesome-api"`
+
+clean: ## delete the binary awesome-api
+	rm -f awesome-api awesome.log
+
+test: ## test for functionality
+	curl http://localhost:9999
