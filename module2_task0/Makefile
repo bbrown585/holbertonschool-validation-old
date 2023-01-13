@@ -1,9 +1,4 @@
-build: init 
-
-init: ## intialize the project repo
-    go mod init github.com/bbrown585/awesome-api
-
-compile: ## compile source code to a binary
+build: ## compile source code to a binary
     go build -o awesome-api main.go
 
 run: ## Run the app in the background and write the logs
