@@ -1,5 +1,7 @@
 build: ## compile source code to a binary
-    go build -o awesome-api main.go
+    mkdir awesome-api
+	cd awesome-api
+	go build -o awesome-api main.go
 
 run: ## Run the app in the background and write the logs
 	./awesome-api >./awesome.log 2>&1 &
