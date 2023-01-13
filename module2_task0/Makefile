@@ -1,7 +1,7 @@
 build: init 
 
 init: ## intialize the project repo
-    go mod init github.com/<your github handle>/awesome-api
+    go mod init github.com/bbrown585/awesome-api
 
 compile: ## compile source code to a binary
     go build -o awesome-api main.go
