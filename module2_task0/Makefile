@@ -1,5 +1,5 @@
 build: ## compile source code to a binary
-    mkdir awesome-api
+	mkdir awesome-api
 	cd awesome-api
 	go init github.com/bbrown585/awesome-api
 	go build -o awesome-api main.go
