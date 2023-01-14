@@ -1,3 +1,7 @@
+.SILENT:
+help: ## Print a list of all the goals with a sentence.
+	sed -n '2p;5p;11p;14p;17p;21p' Makefile | grep "##" | tr -d "##"
+
 build: ## compile source code to a binary
 	mkdir awesome-api
 	cd awesome-api
@@ -12,9 +16,6 @@ stop: ## stop the app
 
 clean: ## delete the binary awesome-api
 	rm -r awesome-api awesome.log
-
-help: ##  print a list of all the goals with a sentence each
-
 
 test: ## test for functionality
 	curl http://localhost:9999
