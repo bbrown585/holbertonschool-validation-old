@@ -1,1 +1,1 @@
-nohup: ./awesome-api: Permission denied
+/bin/sh: ./awesome-api: is a directory
