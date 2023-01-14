@@ -9,10 +9,10 @@ build: ## compile source code to a binary
 	go build -o awesome-api main.go
 
 run: ## Run the app in the background and write the logs
-	nohup ./awesome-api >./awesome.log 2>&1 &
+	./awesome-api >./awesome.log 2>&1 &
 
-stop: ## stop the app
-	kill `pgrep -f "awesome-api"`
+stop: ## stop the binary
+	kill -f "./awesome-api"
 
 clean: ## delete the binary awesome-api
 	rm -r awesome-api awesome.log

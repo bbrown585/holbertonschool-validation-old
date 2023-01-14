@@ -15,3 +15,4 @@
 - stop
 - clean
 - test
+- help
