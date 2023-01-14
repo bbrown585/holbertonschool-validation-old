@@ -11,7 +11,7 @@ stop: ## stop the app
 	kill `pgrep -f "awesome-api"`
 
 clean: ## delete the binary awesome-api
-	rm -f awesome-api awesome.log
+	rm -r awesome-api awesome.log
 
 help: ##  print a list of all the goals with a sentence each
 
