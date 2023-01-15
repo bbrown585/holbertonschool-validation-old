@@ -1,1 +1,1 @@
-HEALTH: 
+HEALTH: ["TESTOK", "ALIVE", "404"]
