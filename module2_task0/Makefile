@@ -9,8 +9,8 @@ stop: ## stop the app
 	pgrep awesome-api | xargs kill
 
 clean: ## delete the binary awesome-api
-	rm -rf awesome-api 
-	rm awesome.log
+	rm -f awesome-api 
+	rm -f awesome.log
 
 test: ## test for functionality
 	curl http://localhost:9999
