@@ -9,11 +9,12 @@ stop: ## stop the app
 	pgrep awesome-api | xargs kill
 
 clean: ## delete the binary awesome-api
-	rm -r awesome-api awesome.log
+	rm -rf awesome-api 
+	rm awesome.log
 
 test: ## test for functionality
 	curl http://localhost:9999
 	curl http://localhost:9999/health
-
+Silent: ## test for functionality
 help: ## Print a list of all the goals with a sentence.
-	sed -n '2p;5p;11p;14p;17p;20p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;5p;8p;15p;18p;19p' Makefile | grep "##" | tr -d "##"
