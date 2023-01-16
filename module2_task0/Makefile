@@ -17,4 +17,4 @@ test: ## test for functionality
 	curl http://localhost:9999/health
 Silent: ## test for functionality
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;5p;8p;15p;18p;19p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;5p;8p;11p;15p;18p;19p' Makefile | grep "##" | tr -d "##"
