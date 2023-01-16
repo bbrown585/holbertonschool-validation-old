@@ -10,7 +10,7 @@ run: ## Run the app in the background and write the logs
 	./awesome-api >./awesome.log 2>&1 &
 
 stop: ## stop the app
-	pgrep awesome-api | xargs kill
+	kill `pgrep -f "awesome-api"`
 
 clean: ## delete the binary awesome-api
 	rm -r awesome-api awesome.log
