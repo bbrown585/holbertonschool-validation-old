@@ -1,6 +1,6 @@
 Silent: ## test for functionality
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;5p;8p;11p;14p;17p;21p' Makefile | grep "##" | tr -d "##"
+	sed -n '2p;5p;8p;11p;14p;17p;21p' Makefile | grep "##" | tr -d "##"
 
 lint:  ## lint the file
 	golangci-lint run
