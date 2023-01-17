@@ -23,3 +23,6 @@ test: ## test for functionality
 Silent: ## test for functionality
 help: ## Print a list of all the goals with a sentence.
 	sed -n '1p;4p;9p;12p;15p;19p;24p' Makefile | grep "##" | tr -d "##"
+
+## Default
+.PHONY: build clean run stop test lint
