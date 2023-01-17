@@ -15,4 +15,5 @@
 - stop
 - clean
 - test
+- lint
 - help
