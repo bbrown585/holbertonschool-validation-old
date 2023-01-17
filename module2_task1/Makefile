@@ -1,4 +1,4 @@
-lint: # lint the file
+lint: ## lint the file
 	golangci-lint run
 
 build: ## compile source code and build site
