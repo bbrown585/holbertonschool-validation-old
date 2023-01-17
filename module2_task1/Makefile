@@ -1,6 +1,3 @@
-lint: ## lint the file
-	golangci-lint run
-
 build: ## compile source code and build site
 	make lint >/dev/null 2>&1 && go build || echo "ERROR"
 
@@ -18,6 +15,8 @@ test: ## test for functionality
 	curl http://localhost:9999
 	curl http://localhost:9999/health
 
+lint: ## lint the file
+	golangci-lint run
 Silent: ## test for functionality
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;4p;7p;10p;13p;17p;22p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;4p;7p;10p;14p;18p;21p' Makefile | grep "##" | tr -d "##"
