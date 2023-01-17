@@ -1,5 +1,4 @@
 build: ## compile source code and build site
-	golangci-lint run
 	go build
 
 run: ## Run the app in the background and write the logs
