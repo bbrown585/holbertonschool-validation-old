@@ -22,4 +22,4 @@ test: ## test for functionality
 
 Silent: ## test for functionality
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;4p;7p;10p;14p;18p;22p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;5p;8p;11p;14p;18p;25p' Makefile | grep "##" | tr -d "##"
