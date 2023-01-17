@@ -1,3 +1,7 @@
+Silent: ## test for functionality
+help: ## Print a list of all the goals with a sentence.
+	sed -n '2p;5p;9p;12p;15p;18p;22p' Makefile | grep "##" | tr -d "##"
+
 lint: ## lint th
     golangci-lint run
     if [ $? -ne 0 ]; then echo "Linting failed"; exit 1; else echo "Linting succeeded"; fi
@@ -18,8 +22,3 @@ clean: ## delete the binary awesome-api and stop all processes
 test: ## test for functionality
 	curl http://localhost:9999
 	curl http://localhost:9999/health
-
-
-Silent: ## test for functionality
-help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;5p;8p;11p;14p;18p;25p' Makefile | grep "##" | tr -d "##"
