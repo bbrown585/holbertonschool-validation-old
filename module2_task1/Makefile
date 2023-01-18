@@ -1,26 +1,24 @@
-lint: ## Check with golint
+lint: ## lint the file
+	make lint >/dev/null 2>&1 && go build || echo "ERROR"
 	golangci-lint run
- 
-help: ## Show help command
-	sed -ne '/@sed/!s/## //p' Makefile
 
-build:  ## Create Website
-	golangci-lint run
+build: ## compile source code and build site
+	go mod init github.com/bbrown585/awesome-api
 	go build
 
-run: ## Run the application
+run: ## Run the app in the background and write the logs
 	./awesome-api >./awesome.log 2>&1 &
 
-stop: ## Stop the application
-	pkill awesome-api || true
+stop: ## stop the app
+	pgrep awesome-api | xargs kill
 
-test: ## Test the application
+clean: ## delete the binary awesome-api and stop all processes
+	rm -rf ./awesome-api | rm -rf awesome.log
+	pgrep awesome-api | xargs kill
+
+test: ## test for functionality
 	curl http://localhost:9999
 	curl http://localhost:9999/health
-
-clean:  ## Delete content of dist folder
-	pkill awesome-api || true
-	rm -rf ./awesome-api && rm -rf awesome.log
-
-## Default
-.PHONY: build clean run stop test lint
+Silent: ## test for functionality
+help: ## Print a list of all the goals with a sentence.
+	sed -n '1p;5p;9p;12p;15p;19p;23p' Makefile | grep "##" | tr -d "##"
