@@ -16,4 +16,5 @@
 - clean
 - test
 - help
+- lint
 - unit tests
