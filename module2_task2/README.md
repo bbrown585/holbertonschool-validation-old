@@ -17,4 +17,4 @@
 - test
 - help
 - lint
-- unit tests
+- unit-tests
