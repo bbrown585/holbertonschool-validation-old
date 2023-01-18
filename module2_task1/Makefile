@@ -1,6 +1,6 @@
+## curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.50.1
 lint: ## lint the file
 	golangci-lint run
-
 build: ## compile source code and build site
 	make lint >/dev/null 2>&1 && go mod init github.com/bbrown585/awesome-api
 	go build
