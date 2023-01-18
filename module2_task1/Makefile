@@ -1,8 +1,9 @@
 lint: ## lint the file
-	make lint >/dev/null 2>&1 && go build || echo "ERROR"
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.50.1
 	golangci-lint run
 
 build: ## compile source code and build site
+	make lint
 	go mod init github.com/bbrown585/awesome-api
 	go build
 
@@ -13,8 +14,9 @@ stop: ## stop the app
 	pgrep awesome-api | xargs kill
 
 clean: ## delete the binary awesome-api and stop all processes
-	rm -rf ./awesome-api | rm -rf awesome.log
-	pgrep awesome-api | xargs kill
+	make stop
+	rm -rf awesome-api
+	rm awesome.log
 
 test: ## test for functionality
 	curl http://localhost:9999
