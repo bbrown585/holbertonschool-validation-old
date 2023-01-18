@@ -1,6 +1,7 @@
-## curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.50.1
 lint: ## lint the file
+	make lint
 	golangci-lint run
+
 build: ## compile source code and build site
 	make lint >/dev/null 2>&1 && go mod init github.com/bbrown585/awesome-api
 	go build
@@ -21,4 +22,4 @@ test: ## test for functionality
 	curl http://localhost:9999/health
 
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;4p;8p;11p;14p;19p;23p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;5p;9p;12p;15p;20p;24p' Makefile | grep "##" | tr -d "##"
