@@ -1,24 +1,22 @@
-lint: ## lint the file
-	make lint >/dev/null 2>&1 && go build || echo "ERROR"
-	golangci-lint run
+help: ## Show this
+	@sed -ne '/@sed/!s/## //p' Makefile
 
-build: ## compile source code and build site
-	go mod init github.com/bbrown585/awesome-api
-	go build
+build: ## Generate the website from the markdown language
+	@make lint >/dev/null 2>&1 && go build || exit -1
 
-run: ## Run the app in the background and write the logs
-	./awesome-api >./awesome.log 2>&1 &
+run: ## Runs the program
+	@./awesome-api >./awesome.log 2>&1 &
 
-stop: ## stop the app
-	pgrep awesome-api | xargs kill
+stop: ## Kills awesome-api's current process
+	@kill "$(shell pgrep awesome-api)" 2>/dev/null &
 
-clean: ## delete the binary awesome-api and stop all processes
-	rm -rf ./awesome-api | rm -rf awesome.log
-	pgrep awesome-api | xargs kill
+clean: ## Delete the binary done with build command
+	@make -s stop
+	@rm awesome-api awesome.log >/dev/null 2>&1 &
 
-test: ## test for functionality
-	curl http://localhost:9999
-	curl http://localhost:9999/health
-Silent: ## test for functionality
-help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;5p;9p;12p;15p;19p;23p' Makefile | grep "##" | tr -d "##"
+test: ## Tests if the website is currently running properly
+	@curl http://localhost:9999 &
+	@curl http://localhost:9999/health 
+
+lint: ## Helps to make a lint on the files
+	@golangci-lint run
