@@ -13,12 +13,13 @@ stop: ## stop the app
 	@kill "$(shell pgrep awesome-api)" 2>/dev/null &
 
 clean: ## delete the binary awesome-api and stop all processes
-	rm -rf ./awesome-api | rm -rf awesome.log
-	pgrep awesome-api | xargs kill
+	make stop
+	rm -rf awesome-api
+	rm awesome.log >/dev/null 2>&1 &
 
 test: ## test for functionality
 	curl http://localhost:9999 
 	curl http://localhost:9999/health
 
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;5p;9p;12p;15p;19p;23p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;5p;9p;12p;15p;20p;24p' Makefile | grep "##" | tr -d "##"
