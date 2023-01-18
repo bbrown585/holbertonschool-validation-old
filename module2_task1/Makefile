@@ -1,10 +1,9 @@
-help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;3p;6p;9p;12p;15p;19p' Makefile | grep "##" | tr -d "##"
 lint: ## lint the file
 	golangci-lint run
 
 build: ## compile source code and build site
-	make lint >/dev/null 2>&1 && go build || exit 40
+	make lint >/dev/null 2>&1 && go mod init github.com/bbrown585/awesome-api
+	go build
 
 run: ## Run the app in the background and write the logs
 	./awesome-api >./awesome.log 2>&1 &
@@ -19,3 +18,6 @@ clean: ## delete the binary awesome-api and stop all processes
 test: ## test for functionality
 	curl http://localhost:9999 &
 	curl http://localhost:9999/health
+
+help: ## Print a list of all the goals with a sentence.
+	sed -n '1p;4p;8p;11p;14p;18p;22p' Makefile | grep "##" | tr -d "##"
