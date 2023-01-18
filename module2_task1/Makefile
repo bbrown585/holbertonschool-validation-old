@@ -1,22 +1,21 @@
-help: ## Show this
-	@sed -ne '/@sed/!s/## //p' Makefile
+help: ## Print a list of all the goals with a sentence.
+	sed -n '1p;3p;6p;9p;12p;15p;19p' Makefile | grep "##" | tr -d "##"
+lint: ## lint the file
+	golangci-lint run
 
-build: ## Generate the website from the markdown language
-	@make lint >/dev/null 2>&1 && go build || exit -1
+build: ## compile source code and build site
+	make lint >/dev/null 2>&1 && go build || exit 40
 
-run: ## Runs the program
-	@./awesome-api >./awesome.log 2>&1 &
+run: ## Run the app in the background and write the logs
+	./awesome-api >./awesome.log 2>&1 &
 
-stop: ## Kills awesome-api's current process
-	@kill "$(shell pgrep awesome-api)" 2>/dev/null &
+stop: ## stop the app
+	pgrep awesome-api | xargs kill
 
-clean: ## Delete the binary done with build command
-	@make stop
-	@rm awesome-api awesome.log 
+clean: ## delete the binary awesome-api and stop all processes
+	rm -rf ./awesome-api | rm -rf awesome.log
+	pgrep awesome-api | xargs kill
 
-test: ## Tests if the website is currently running properly
-	@curl http://localhost:9999 &
-	@curl http://localhost:9999/health 
-
-lint: ## Helps to make a lint on the files
-	@golangci-lint run
+test: ## test for functionality
+	curl http://localhost:9999 &
+	curl http://localhost:9999/health
