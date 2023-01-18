@@ -1,20 +1,26 @@
-build: ## compile source code to a binary
-	go mod init github.com/bbrown585/awesome-api
+lint: ## linting the golang code, if failure build shouldn't run
+	golangci-lint run
+build: ## build: compile source code of application to a binary
+	make lint >/dev/null 2>&1 && go mod init github.com/bbrown585/awesome-api
 	go build
 
-run: ## Run the app in the background and write the logs
+run: ## run: Run the app in background by executing the binary
 	./awesome-api >./awesome.log 2>&1 &
 
-stop: ## stop the app
-	pgrep awesome-api | xargs kill
+stop: ## stop: stop the application using shell command "kill"
+	@kill "$(shell pgrep awesome-api)" 2>/dev/null &
 
-clean: ## delete the binary awesome-api
-	rm -rf awesome-api 
-	rm awesome.log
+clean: ## clean: Delete the binary and the log file
+	make stop
+	rm -rf awesome-api
+	rm awesome.log >/dev/null 2>&1 &
 
-test: ## test for functionality
+test: ## test: run tests to ensure it behaves as expected
 	curl http://localhost:9999
 	curl http://localhost:9999/health
-Silent: ## test for functionality
+
+unit-tests: ## unit-tests: execute golang unit test
+	go test -v -short -coverprofile=coverage-units.out
+
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;5p;8p;11p;15p;18p;19p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;3p;7p;10p;13p;18p;22p;25p' Makefile | grep "##" | tr -d "##"

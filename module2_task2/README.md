@@ -16,3 +16,4 @@
 - clean
 - test
 - help
+- unit tests
