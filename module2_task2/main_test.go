@@ -1,67 +1,99 @@
 package main
 
 import (
-  "net/http"
-  "net/http/httptest"
-  "net/url"
-  "testing"
+	// "fmt"
+	"net/http"
+	"net/http/httptest"
+	"net/url"
+	"testing"
 )
 
 func Test_HelloHandler(t *testing.T) {
-  if !testing.Short() {
-    t.Skip("Flag `-short` absent: skipping Unit Tests.")
-  }
+	if !testing.Short() {
+		t.Skip("Flag `-short` absent: skipping Unit Tests.")
+	}
 
-  tests := []struct {
-    name         string
-    queryString  string
-    responseCode int
-    body         string
-  }{
-    {
-      name:         "Grace Hopper",
-      queryString:  "name=Grace Hopper",
-      responseCode: 200,
-      body:         "Hello Grace Hopper!",
-    },
-    {
-      name:         "Rosalind Franklin",
-      queryString:  "name=Rosalind Franklin",
-      responseCode: 200,
-      body:         "Hello Rosalind Franklin!",
-    },
-    // INSERT MORE TESTS HERE
-  }
-  for _, tt := range tests {
-    t.Run(tt.name, func(t *testing.T) {
+	tests := []struct {
+		name         string
+		queryString  string
+		responseCode int
+		body         string
+	}{
+		{
+			name:         "Grace Hopper",
+			queryString:  "name=Grace Hopper",
+			responseCode: 200,
+			body:         "Hello Grace Hopper!",
+		},
+		{
+			name:         "Rosalind Franklin",
+			queryString:  "name=Rosalind Franklin",
+			responseCode: 200,
+			body:         "Hello Rosalind Franklin!",
+		},
+		// INSERT MORE TESTS HERE
+		{
+			name:         "Name without value",
+			queryString:  "name",
+			responseCode: 400,
+		},
+		{
+			name:         "Name Empty",
+			queryString:  "name=",
+			responseCode: 400,
+		},
+		{
+			name:         "Another queryString halo",
+			queryString:  "halo=Haloooo!",
+			responseCode: 200,
+			body:         "Hello !",
+		},
+		{
+			name:         "Without any param",
+			queryString:  "name=test&name=lol",
+			responseCode: 200,
+			body:         "Hello lol!",
+		},
+	}
 
-      // Build an HTTP request for the current test `tt`
-      req, err := http.NewRequest("GET", "/hello", nil)
-      if err != nil {
-        t.Fatal(err)
-      }
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
 
-      queryParams, _ := url.ParseQuery(tt.queryString)
-      req.URL.RawQuery = queryParams.Encode()
+			// Build an HTTP request for the current test `tt`
+			req, err := http.NewRequest("GET", "/hello", nil)
+			if err != nil {
+				t.Fatal(err)
+			}
 
-      // Initialize a new httptest serve with the function under test
-      rr := httptest.NewRecorder()
-      handler := http.HandlerFunc(HelloHandler)
-      handler.ServeHTTP(rr, req)
+			queryParams, _ := url.ParseQuery(tt.queryString)
+			req.URL.RawQuery = queryParams.Encode()
 
-      // Check that the status code is what you expect.
-      expectedCode := tt.responseCode
-      gotCode := rr.Code
-      if gotCode != expectedCode {
-        t.Errorf("handler returned wrong status code: got %v want %v", gotCode, expectedCode)
-      }
+			// Initialize a new httptest serve with the function under test
+			rr := httptest.NewRecorder()
+			handler := http.HandlerFunc(HelloHandler)
+			handler.ServeHTTP(rr, req)
 
-      // Check that the response body is what you expect.
-      expectedBody := tt.body
-      gotBody := rr.Body.String()
-      if gotBody != expectedBody {
-        t.Errorf("handler returned unexpected body: got %v want %v", gotBody, expectedBody)
-      }
-    })
-  }
+			resp := rr.Result()
+			// fmt.Println(resp)
+
+			// Check that the status code is what you expect.
+			expectedCode := tt.responseCode
+			gotCode := rr.Code
+			if gotCode != expectedCode {
+				t.Errorf("handler returned wrong status code: got %v want %v", gotCode, expectedCode)
+			}
+
+			// Check that the response body is what you expect.
+			expectedBody := tt.body
+			gotBody := rr.Body.String()
+			if expectedBody != "nil" && gotBody != expectedBody {
+				t.Errorf("handler returned unexpected body: got %v want %v", gotBody, expectedBody)
+			}
+
+			if gotCode == 200 && (resp.Header.Get("Content-Type") != "text/plain; charset=utf-8") {
+				t.Errorf("handler returned incorrect content type: got %v", resp.Header.Get("Content-Type"))
+			}
+
+		})
+	}
 }
