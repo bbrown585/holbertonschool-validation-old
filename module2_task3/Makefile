@@ -29,4 +29,4 @@ unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
 
 integration-tests: ## make unit tests on the files
-	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
+	go test -v -short -coverprofile=coverage-units.out || echo $1
