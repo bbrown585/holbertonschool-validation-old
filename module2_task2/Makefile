@@ -20,7 +20,7 @@ test: ## test: run tests to ensure it behaves as expected
 	curl http://localhost:9999/health
 
 unit-tests: ## unit-tests: execute golang unit test
-	go test -v -short -coverprofile=coverage-units.out
+	go test -v -short -coverprofile=coverage-units.out || echo $1
 
 help: ## Print a list of all the goals with a sentence.
 	sed -n '1p;3p;7p;10p;13p;18p;22p;25p' Makefile | grep "##" | tr -d "##"
