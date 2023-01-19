@@ -15,10 +15,12 @@ clean: ## Delete
 	make stop
 	rm -r awesome-api 2>&1 &
 	rm -r awesome.log 2>&1 &
+	rm -r coverage-integrations.out
+	rm -r coverage-units.out
 
 test: ## Tests the application
 	make unit-tests
-	make unit-tests
+	integration-tests
 
 lint: ## make lint on the files
 	golangci-lint run
@@ -27,4 +29,4 @@ unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
 
 integration-tests: ## make unit tests on the files
-	go test -v -short -coverprofile=coverage-integrations.out || echo $1
+	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
