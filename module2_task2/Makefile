@@ -1,8 +1,7 @@
 lint: ## linting the golang code, if failure build shouldn't run
 	golangci-lint run
 build: ## build: compile source code of application to a binary
-	make lint >/dev/null 2>&1 && go mod init github.com/bbrown585/awesome-api
-	go build
+	@make lint && go build || exit -1
 
 run: ## run: Run the app in background by executing the binary
 	./awesome-api >./awesome.log 2>&1 &
@@ -23,4 +22,4 @@ unit-tests: ## unit-tests: execute golang unit test
 	@go test -v -short -coverprofile=coverage-units.out || echo $1
 
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;3p;7p;10p;13p;18p;22p;25p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;3p;6p;9p;12p;17p;21p;24p' Makefile | grep "##" | tr -d "##"
