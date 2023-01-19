@@ -1,3 +1,5 @@
+unit-tests: ## unit-tests: execute golang unit test
+	@go test -v -short -coverprofile=coverage-units.out || echo $1
 lint: ## linting the golang code, if failure build shouldn't run
 	golangci-lint run
 build: ## build: compile source code of application to a binary
@@ -18,8 +20,5 @@ test: ## test: run tests to ensure it behaves as expected
 	curl http://localhost:9999
 	curl http://localhost:9999/health
 
-unit-tests: ## unit-tests: execute golang unit test
-	@go test -v -short -coverprofile=coverage-units.out || echo $1
-
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;3p;6p;9p;12p;17p;21p;24p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;3p;5p;8p;11p;14p;19p;23p' Makefile | grep "##" | tr -d "##"
