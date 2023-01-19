@@ -1,26 +1,29 @@
-help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;3p;5p;8p;11p;14p;19p;23p;26p' Makefile | grep "##" | tr -d "##"
-lint: ## linting the golang code, if failure build shouldn't run
-	golangci-lint run
-build: ## build: compile source code of application to a binary
-	@make lint && go build || exit -1
+.SILENT:
+help: ## implemente and print a list of all the goals
+	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-run: ## run: Run the app in background by executing the binary
+build: ## Compiles the source code
+	make lint && go build || exit -1
+
+run: ## Runs the application in background
 	./awesome-api >./awesome.log 2>&1 &
 
-stop: ## stop: stop the application using shell command "kill"
-	@kill "$(shell pgrep awesome-api)" 2>/dev/null &
+stop: ## Stops the application
+	@kill $(shell pgrep awesome-api) 2>&1 &
 
-clean: ## clean: Delete the binary and the log file
+clean: ## Delete
 	make stop
-	rm -rf awesome-api
-	rm awesome.log >/dev/null 2>&1 &
+	rm -r awesome-api 2>&1 &
+	rm -r awesome.log 2>&1 &
 
-test: ## test: run tests to ensure it behaves as expected
-	curl http://localhost:9999
-	curl http://localhost:9999/health
+test: ## Tests the application
+	make unit-tests
+	make unit-tests
 
-unit-tests: ## unit-tests: execute golang unit test
+lint: ## make lint on the files
+	golangci-lint run
+
+unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
 
 integration-tests: ## make unit tests on the files
