@@ -1,7 +1,7 @@
 clean: ## clean: Delete the binary and the log file
 	rm -rf dist
 build: ## build: compile source code of application to a binary
-	make check && hugo
+	make check >/dev/null 2>&1 && hugo || exit -1
 
 post: ## Create a new blog post
 	hugo new ./content/posts/$(POST_NAME).md
