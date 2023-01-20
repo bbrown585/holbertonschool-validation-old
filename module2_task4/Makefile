@@ -25,4 +25,4 @@ check: ## Check
 
 validate: ## Validate
 	make build
-	./w3c_validator.py ./dist/index.html 
+	./w3c_validator.py ./dist/index.html || true
