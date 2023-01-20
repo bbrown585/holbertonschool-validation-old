@@ -24,3 +24,5 @@ check: ## Check
 	markdown-link-check ./content/posts/*
 
 validate: ## Validate
+	make build
+	./w3c_validator.py ./dist/index.html 
