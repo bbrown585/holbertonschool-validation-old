@@ -1,3 +1,6 @@
 [submodule "module1_task0/module1_task0/themes/ananke"]
 	path = module1_task0/module1_task0/themes/ananke
 	url = https://github.com/theNewDynamic/gohugo-theme-ananke.git
+[submodule "module2_task4/module2_task4/W3C-Validator"]
+	path = module2_task4/module2_task4/W3C-Validator
+	url = https://github.com/hs-hq/W3C-Validator.git

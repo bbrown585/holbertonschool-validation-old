@@ -1,7 +1,3 @@
-unit-tests: ## unit-tests: execute golang unit test
-	@go test -v -short -coverprofile=coverage-units.out || echo $1
-lint: ## linting the golang code, if failure build shouldn't run
-	golangci-lint run
 build: ## build: compile source code of application to a binary
 	@make lint && go build || exit -1
 
@@ -16,9 +12,13 @@ clean: ## clean: Delete the binary and the log file
 	rm -rf awesome-api
 	rm awesome.log >/dev/null 2>&1 &
 
-test: ## test: run tests to ensure it behaves as expected
-	curl http://localhost:9999
-	curl http://localhost:9999/health
+post: ## Create a new blog post
+	hugo new ./content/posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/g' ./content/posts/$(POST_NAME).md
+
+check: ## Check
+	markdownlint ./content/posts/*
+	markdown-link-check ./content/posts/*
 
 help: ## Print a list of all the goals with a sentence.
 	sed -n '1p;3p;5p;8p;11p;14p;19p;23p' Makefile | grep "##" | tr -d "##"
