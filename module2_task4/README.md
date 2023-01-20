@@ -19,3 +19,4 @@
 - lint
 - unit-tests
 - check
+- validate
