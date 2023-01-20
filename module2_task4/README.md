@@ -18,3 +18,4 @@
 - help
 - lint
 - unit-tests
+- check
