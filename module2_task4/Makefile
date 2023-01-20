@@ -21,4 +21,4 @@ check: ## Check
 	markdown-link-check ./content/posts/*
 
 help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;3p;5p;8p;11p;14p;19p;23p' Makefile | grep "##" | tr -d "##"
+	sed -n '1p;4p;7p;10p;15p;19p;23p' Makefile | grep "##" | tr -d "##"
