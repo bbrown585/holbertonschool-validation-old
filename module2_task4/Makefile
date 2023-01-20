@@ -1,5 +1,5 @@
-help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;3p;6p;9p;12p;17p;21p;25' Makefile | grep "##" | tr -d "##"
+help: ##shows commands usage information
+	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 build: ## build: compile source code of application to a binary
 	make check
 	hugo
