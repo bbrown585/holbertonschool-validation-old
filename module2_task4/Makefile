@@ -1,8 +1,7 @@
 help: ##shows commands usage information
 	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 build: ## build: compile source code of application to a binary
-	make check
-	hugo
+	make check >/dev/null 2>&1 && hugo || exit -1
 
 run: ## run: Run the app in background by executing the binary
 	./awesome-api >./awesome.log 2>&1 &
