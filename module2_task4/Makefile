@@ -1,3 +1,5 @@
+help: ## Print a list of all the goals with a sentence.
+	sed -n '1p;3p;6p;9p;12p;17p;21p;25' Makefile | grep "##" | tr -d "##"
 build: ## build: compile source code of application to a binary
 	@make lint && go build || exit -1
 
@@ -21,6 +23,3 @@ check: ## Check
 	markdown-link-check ./content/posts/*
 
 validate: ## Validate
-
-help: ## Print a list of all the goals with a sentence.
-	sed -n '1p;4p;7p;10p;15p;19p;23p;25' Makefile | grep "##" | tr -d "##"
