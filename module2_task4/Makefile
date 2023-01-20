@@ -1,7 +1,8 @@
 help: ## Print a list of all the goals with a sentence.
 	sed -n '1p;3p;6p;9p;12p;17p;21p;25' Makefile | grep "##" | tr -d "##"
 build: ## build: compile source code of application to a binary
-	@make lint && go build || exit -1
+	make check
+	hugo
 
 run: ## run: Run the app in background by executing the binary
 	./awesome-api >./awesome.log 2>&1 &
