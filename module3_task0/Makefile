@@ -1,3 +1,5 @@
+help: ## showing help documentation
+	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 build: ## Generate the website from the markdown and config file in dist
 	hugo
 
