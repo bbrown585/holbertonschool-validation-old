@@ -22,4 +22,4 @@
 - validate
 - post
 - integration-tests
-- workflow
+- Workflow
