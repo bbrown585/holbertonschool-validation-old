@@ -21,3 +21,4 @@
 - check
 - validate
 - post
+- integration-tests
