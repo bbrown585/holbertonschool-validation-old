@@ -1,16 +1,32 @@
-# Define variables
-Publish=hugo
+.SILENT:
+help: ## implemente and print a list of all the goals
+	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-build: ## Builds a new website
-	$(Publish)
+build: ## Compiles the source code
+	make lint && go build || exit -1
 
-clean: ## Remove all files from folder dist
-	rm -r dist/*
+run: ## Runs the application in background
+	./awesome-api >./awesome.log 2>&1 &
 
-post: ## Create new post and using the sed command to modify the contents of a file.
-	$(Publish) new posts/$(POST_NAME).md
-	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
-# Overwrite the content of a text file without generating a new one (option -i)
+stop: ## Stops the application
+	@kill $(shell pgrep awesome-api) 2>&1 &
 
-help: ## Display the list of targets and their usage.
-	cat Makefile | grep '##' | tr -d '##' | head -n -1
+clean: ## Delete
+	make stop
+	rm -r awesome-api 2>&1 &
+	rm -r awesome.log 2>&1 &
+	rm -r coverage-integrations.out
+	rm -r coverage-units.out
+
+test: ## Tests the application
+	make unit-tests
+	make unit-tests
+
+lint: ## make lint on the files
+	golangci-lint run
+
+unit-tests: ## make unit tests on the files
+	go test -v -short -coverprofile=coverage-units.out || echo $1
+
+integration-tests: ## make unit tests on the files
+	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
