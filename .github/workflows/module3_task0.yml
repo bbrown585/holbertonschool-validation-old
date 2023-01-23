@@ -1,0 +1,20 @@
+name: module3_task0
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  clone-and-make-help:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Clone Repository
+      run: git clone https://github.com/bbrown558/holbertonschool-validation.git
+    - name: Change Directory
+      run: cd module3_task0
+    - name: Run make help
+      run: make help
