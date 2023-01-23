@@ -1,32 +1,28 @@
-.SILENT:
-help: ## implemente and print a list of all the goals
+help: ## showing help documentation
 	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+build: ## Generate the website from the markdown and config file in dist
+	hugo
 
-build: ## Compiles the source code
-	make lint && go build || exit -1
+clean: ## Clean up the content in dist
+	rm -rf dist/*
+check: ## Check
 
-run: ## Runs the application in background
-	./awesome-api >./awesome.log 2>&1 &
+validate: ## Validate
 
-stop: ## Stops the application
-	@kill $(shell pgrep awesome-api) 2>&1 &
+test: ## Test
 
-clean: ## Delete
-	make stop
-	rm -r awesome-api 2>&1 &
-	rm -r awesome.log 2>&1 &
-	rm -r coverage-integrations.out
-	rm -r coverage-units.out
+unit-tests: ## Test
 
-test: ## Tests the application
-	make unit-tests
-	make unit-tests
+lint: ## Lint
 
-lint: ## make lint on the files
-	golangci-lint run
+stop: ## Stop
 
-unit-tests: ## make unit tests on the files
-	go test -v -short -coverprofile=coverage-units.out || echo $1
+integration-tests: ## Test
 
-integration-tests: ## make unit tests on the files
-	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
+run: ## Run
+
+Workflow: ## Workflow
+
+post: ## Post the website
+	hugo new posts/$(POST_NAME).md
+	sed -i '2s/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md >/dev/null 2>&1
