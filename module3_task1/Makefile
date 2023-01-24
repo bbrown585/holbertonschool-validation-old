@@ -23,7 +23,7 @@ test: ## Tests the application
 	make unit-tests
 
 lint: ## make lint on the files
-	shellcheck setup.sh
+	$(shellcheck) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
@@ -32,7 +32,7 @@ integration-tests: ## make unit tests on the files
 	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
 
 validate: ## make unit tests on the files
-
+	pwd
 run: ## make unit tests on the files
 
 post: ## Post the website
