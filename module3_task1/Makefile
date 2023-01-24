@@ -1,7 +1,3 @@
-# Define variables
-Publish=hugo
-SHELLCHECK=shellcheck
-
 .SILENT:
 help: ## implemente and print a list of all the goals
 	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -27,7 +23,7 @@ test: ## Tests the application
 	make unit-tests
 
 lint: ## make lint on the files
-	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+	shellcheck setup.sh
 
 unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
