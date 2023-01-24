@@ -16,7 +16,7 @@ jobs:
       - name: Run the script setup.sh
         run: |
           cd module3_task1/
-          ./setup.sh
+          sudo ./setup.sh
       - name: Build the app
         run: |
           cd module3_task1/
