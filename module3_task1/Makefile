@@ -6,7 +6,7 @@ build: ## Compiles the source code
 	hugo
 
 run: ## Runs the application in background
-	./awesome-api >./awesome.log 2>&1 &
+	
 
 stop: ## Stops the application
 	@kill $(shell pgrep awesome-api) 2>&1 &
