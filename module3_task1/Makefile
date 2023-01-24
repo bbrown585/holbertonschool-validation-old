@@ -23,7 +23,7 @@ test: ## Tests the application
 	make unit-tests
 
 lint: ## make lint on the files
-	shellcheck setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+	shellcheck setup.sh
 
 unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
