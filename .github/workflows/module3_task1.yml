@@ -11,11 +11,13 @@ jobs:
   module3_task1:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v3
-      - name: Validate Makefile help
+      - name: Clone the repo
+        uses: actions/checkout@v3
+      - name: Run the script setup.sh
         run: |
-          ./setup.sh
-          make help
+          cd module3_task1/
+          sudo ./setup.sh
+      - name: Build the app
+        run: |
+          cd module3_task1/
           make build
-          make clean
-          make post
