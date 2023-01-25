@@ -1,11 +1,7 @@
 #!/bin/bash
-
-# Installation of Go-Hugo and Make command
-apt-get update && apt-get install -y hugo make wget
-# fixing the recipe for 'build' target fail
-# getting latest release of 'hugo'
-wget https://github.com/gohugoio/hugo/releases/download/v0.109.0/hugo_extended_0.109.0_linux-amd64.deb	
-# install it
-dpkg -i hugo_extended_0.109.0_linux-amd64.deb	
-# Running command build to build the website
-make build
+apt-get update && apt-get install -y hugo make
+apt-get install curl -y
+curl -Lo install_hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.109.0/hugo_extended_0.109.0_linux-amd64.deb
+apt-get install ./install_hugo.deb
+apt-get install shellcheck -y
+make run

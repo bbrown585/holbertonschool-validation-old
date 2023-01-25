@@ -19,5 +19,6 @@ jobs:
           sudo ./setup.sh
       - name: Build the app
         run: |
-          cd module3_task1 && make build
+          cd module3_task1/
+          make build
   
