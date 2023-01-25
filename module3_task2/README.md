@@ -36,3 +36,4 @@ This workflow must be [triggered](https://docs.github.com/en/actions/using-workf
 - post
 - integration-tests
 - Workflow
+- package
