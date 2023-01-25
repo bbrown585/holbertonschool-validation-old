@@ -12,11 +12,7 @@ post: ## Post the website
 	sed -i '2s/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md >/dev/null 2>&1
 
 lint: ## make lint on the files
-	shellcheck setup.sh
-
-markdownlint: ## updated to lint the files README.md and DEPLOY.md
-	markdownlint README.md
-	markdownlint DEPLOY.md
+	markdownlint README.md && markdownlint DEPLOY.md
 
 integration-tests: ## make unit tests on the files
 	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
@@ -29,10 +25,9 @@ validate: ## make unit tests on the files
 package: ## Create an archive file containing the dist/ directory
 	hugo
 	zip -r awesome-website.zip dist/
-run: ## Runs the application in background
-	./awesome-api >./awesome.log 2>&1 &
 
 run: ## make unit tests on the files
+
 .SILENT:
 help: ## implemente and print a list of all the goals
 	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
