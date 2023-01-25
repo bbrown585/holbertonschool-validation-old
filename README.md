@@ -69,7 +69,7 @@ To execute the make file use the following syntax `make <command>`
 
 `help`:
 - Prints out information of the commands to the terminal.
-'package':
+`package`:
 - Creates a new package
 
 # Story
