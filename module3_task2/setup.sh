@@ -5,3 +5,4 @@ curl -Lo install_hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.
 apt-get install ./install_hugo.deb
 npm install -g markdownlint-cli
 rm ./install_hugo.deb
+sudo apt install zip
