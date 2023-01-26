@@ -1,40 +1,40 @@
-# Help on commands
-help: ## Show this help
-	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
+# Define variables
+Publish=hugo
+SHELLCHECK=shellcheck
 
-# Build the website in the dist directory
-build: ## Build the website in the dist directory
-	hugo 
+build: ### Build
+	$(Publish)
 
-# Clean up the dist directory
-clean: ## Clean up the dist directory
-	rm -rf dist/*
+clean: ### Clean
+	rm -r dist/*
 
-# Create a new blog post
-post: ## Create a new blog post
-	hugo new ./content/posts/$(POST_NAME).md
-	sed -i 's/title: .*/title: "$(POST_TITLE)"/g' ./content/posts/$(POST_NAME).md
+post: ## Post
+	$(Publish) new posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
-# Create an archive file containing the dist/ directory
-package: ## Create an archive file containing the dist/ directory
+lint: ### Lint
+	markdownlint DEPLOY.md
+	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+
+markdownlint: ### Markdown
+	markdownlint README.md
+	markdownlint DEPLOY.md
+
+integration-tests: ## Integration tests
 	hugo
-	zip -r awesome-website.zip dist/
+	ls dist/
 
-# Lint the README.md and DEPLOY.md files
-lint: ## Lint the README.md and DEPLOY.md files
-	markdownlint README.md && markdownlint DEPLOY.md
+unit-tests: ## Unit tests
+	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
+	make build
+	make clean
 
-# Unit-tests the files
-unit-tests: ## Unittest the files
-	ls
+validate: ## validate	
+	pwd
 
-# Validate the files
-validate: ## Validate the files
-	ls
+package: ## package	
+	make build
+	zip awesome-website.zip dist/	
 
-# Integration-tests the files
-integration-tests: ## Integration-tests the files
-	ls
-
-# Set default target
-.PHONY: build clean post package lint unit-tests validate integration-tests
+help: ## help
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
