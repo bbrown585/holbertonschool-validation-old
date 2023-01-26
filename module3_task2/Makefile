@@ -33,7 +33,7 @@ validate: ## validate
 	pwd
 
 package: ## package	
-	make build
+	go init github.com/bbrown585/awesome-api
 	zip awesome-website.zip dist/	
 
 help: ## help
