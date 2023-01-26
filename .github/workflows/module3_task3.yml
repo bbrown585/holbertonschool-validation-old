@@ -1,0 +1,45 @@
+---
+env:
+  GH_TOKEN: ${{ github.token }}
+name: module3_task3
+"on":
+  push:
+    tags: [1.0.0]
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions: read-all
+jobs:
+  builds:
+    permissions: write-all
+    name: job1
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install markdownlint from npm
+        run: npm install -g markdownlint-cli
+      - name: Setup Env and Validate Makefile help
+        run: |
+          make lint
+          ./setup.sh
+          make help
+          make build
+          make clean
+          make POST_NAME=who-are-we POST_TITLE="Who are we" post
+          make package
+          make unit-tests
+          make validate
+          make integration-tests
+        working-directory: module3_task3
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/1.0.0')
+        with:
+          files: |
+            ./module3_task3/DEPLOY.md
+            ./module3_task3/awesome-website.zip
+      - run: gh release create v1.0.0 -F ./module3_task3/DEPLOY.md 2>/dev/null || echo "OK"
