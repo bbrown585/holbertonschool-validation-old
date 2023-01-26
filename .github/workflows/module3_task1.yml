@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Validate Makefile help
         run: |
-          ./setup.sh
+          sudo ./setup.sh
           make help
           make build
           make clean
