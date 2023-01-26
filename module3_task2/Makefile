@@ -33,8 +33,8 @@ validate: ## validate
 	pwd
 
 package: ## package	
-	zip awesome-website.zip dist/	
 	make build
+	zip awesome-website.zip dist/	
 
 help: ## help
 	cat Makefile | grep '##' | tr -d '##' | head -n -1
