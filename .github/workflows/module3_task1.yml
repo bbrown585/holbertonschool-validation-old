@@ -5,20 +5,22 @@ name: module3_task1
     branches:
       - main
   schedule:
-    - cron: "0 0 * * *"
+    - cron: '0 0 * * *'
+
+permissions: read-all
 
 jobs:
-  module3_task1:
+  builds:
+    name: job1
     runs-on: ubuntu-18.04
+
     steps:
-      - name: Clone the repo
-        uses: actions/checkout@v3
-      - name: Run the script setup.sh
+      - uses: actions/checkout@v3
+      - name: Validate Makefile help
         run: |
-          cd module3_task1/
-          sudo ./setup.sh
-      - name: Build the app
-        run: |
-          cd module3_task1/
+          ./setup.sh
+          make help
           make build
-  
+          make clean
+          make POST_NAME=who-are-we POST_TITLE="Who are we" post
+        working-directory: module3_task1
