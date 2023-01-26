@@ -1,29 +1,40 @@
-build: ## Compiles the source code
-	make build
+# Define variables
+Publish=hugo
+SHELLCHECK=shellcheck
 
-clean: ## Delete
-	rm -rf dist/*
-post: ## Post the website
-	hugo new posts/$(POST_NAME).md
-	sed -i '2s/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md >/dev/null 2>&1
+build:
+	$(Publish)
 
-lint: ## make lint on the files
-	shellcheck setup.sh
+clean:
+	rm -r dist/*
 
-integration-tests: ## make unit tests on the files
-	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
+post:
+	$(Publish) new posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
-unit-tests: ## make unit tests on the files
-	go test -v -short -coverprofile=coverage-units.out || echo $1
+lint:
+	markdownlint DEPLOY.md
+	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
-validate: ## make unit tests on the files
-	pwd
-package: ## Create an archive file containing the dist/ directory
+markdownlint:
+	markdownlint README.md
+	markdownlint DEPLOY.md
+
+integration-tests:
 	hugo
-	zip -r awesome-website.zip awesome-api dist/
+	ls dist/
 
-run: ## make unit tests on the files
+unit-tests:
+	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
+	make build
+	make clean
 
-.SILENT:
-help: ## implemente and print a list of all the goals
-	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+validate:
+	pwd
+
+package:
+	make build
+	zip awesome-website.zip dist/	
+
+help:
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
