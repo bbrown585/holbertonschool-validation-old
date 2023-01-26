@@ -1,5 +1,5 @@
 build: ## Compiles the source code
-	make go build || exit -1
+	make build
 
 clean: ## Delete
 	rm -rf dist/*
