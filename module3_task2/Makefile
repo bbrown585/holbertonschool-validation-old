@@ -8,8 +8,7 @@ post: ## Post the website
 	sed -i '2s/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md >/dev/null 2>&1
 
 lint: ## make lint on the files
-	markdownlint README.md 
-	markdownlint DEPLOY.md
+	shellcheck setup.sh
 
 integration-tests: ## make unit tests on the files
 	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
