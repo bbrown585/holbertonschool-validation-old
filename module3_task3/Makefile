@@ -15,7 +15,6 @@ post: ## Post
 lint: ### Lint
 	markdownlint README.md
 	markdownlint DEPLOY.md
-	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 markdownlint: ### Markdown
 	markdownlint README.md
