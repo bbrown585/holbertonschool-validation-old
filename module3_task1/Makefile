@@ -3,7 +3,7 @@ help: ## implemente and print a list of all the goals
 	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 build: ## Compiles the source code
-	go build
+	build
 
 run: ## Runs the application in background
 	./awesome-api >./awesome.log 2>&1 &
