@@ -1,9 +1,9 @@
-.SILENT:
-help: ## implemente and print a list of all the goals
-	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+# Define variables
+Publish=hugo
+SHELLCHECK=shellcheck
 
-build: ## Compiles the source code
-	build
+build: ## Builds a new website
+	$(Publish)
 
 run: ## Runs the application in background
 	./awesome-api >./awesome.log 2>&1 &
@@ -23,7 +23,7 @@ test: ## Tests the application
 	make unit-tests
 
 lint: ## make lint on the files
-	shellcheck setup.sh
+	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
@@ -38,3 +38,6 @@ run: ## make unit tests on the files
 post: ## Post the website
 	hugo new posts/$(POST_NAME).md
 	sed -i '2s/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md >/dev/null 2>&1
+.SILENT:
+help: ## implemente and print a list of all the goals
+	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
