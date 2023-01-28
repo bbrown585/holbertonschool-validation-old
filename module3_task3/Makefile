@@ -13,6 +13,7 @@ post: ## Post
 	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
 lint: ### Lint
+	markdownlint README.md
 	markdownlint DEPLOY.md
 	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
