@@ -1,19 +1,25 @@
-# tag
+# Deployment Document
 
-## What is in the archive and how to unarchive it?
+- What is in the archive and how to unarchive it?
 
-The archive awesome-website.zip contains the directory dist/
-which contains the website
-You can unzip it to the current directory using => unzip awesome-website.zip
+- It is a compressed file that is the awesome-api binary and is 'dist directory'.
 
-## What are the commands to start and stop the application?
+- Syntax to unzip the zip package
+  
+  - Run unzip awesome-website.zip
 
-The commands to start and stop the application are =>
+- How to verify the version
+  
+  - Run git tag
 
-## How to customize where the application logs are written?
+- What are the commands to start and stop the application?
 
-I don't know
+  - Use Hugo server, sintax type hugo server
 
-## How to “quickly” verify that the application is running (healthcheck)?
+- How to customize where the application logs are written?
 
-I don't know
+- I do not know yet
+
+- How to “quickly” verify that the application is running (healthcheck)?
+
+- Check it out on local host [http://localhost:1313]
