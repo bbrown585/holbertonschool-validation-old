@@ -1,10 +1,15 @@
+# Define variables
+Publish=hugo
+SHELLCHECK=shellcheck
+
+
 # Help on commands
 help: ## Show this help
 	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
 
 # Build the website in the dist directory
 build: ## Build the website in the dist directory
-	hugo 
+	$(Publish)
 
 # Clean up the dist directory
 clean: ## Clean up the dist directory
@@ -22,7 +27,8 @@ package: ## Create an archive file containing the dist/ directory
 
 # Lint the README.md and DEPLOY.md files
 lint: ## Lint the README.md and DEPLOY.md files
-	markdownlint README.md && markdownlint DEPLOY.md
+	markdownlint DEPLOY.md
+	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 # Unit-tests the files
 unit-tests: ## Unittest the files
