@@ -1,41 +1,40 @@
-# Define variables
-Publish=hugo
-SHELLCHECK=shellcheck
+# Help on commands
+help: ## Show this help
+	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
 
-build: ## Builds a new website
-	$(Publish)
+# Build the website in the dist directory
+build: ## Build the website in the dist directory
+	hugo 
 
-clean: ## Remove all files from folder dist
-	rm -r dist/*
+# Clean up the dist directory
+clean: ## Clean up the dist directory
+	rm -rf dist/*
 
-post: ## Create new post and using the sed command to modify the contents of a file.
-	$(Publish) new posts/$(POST_NAME).md
-	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
+# Create a new blog post
+post: ## Create a new blog post
+	hugo new ./content/posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/g' ./content/posts/$(POST_NAME).md
 
-lint: ## shellcheck setup
-	markdownlint README.md
-	markdownlint DEPLOY.md
-	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
-
-markdownlint: ## updated to lint the files README.md and DEPLOY.md
-	markdownlint README.md
-	markdownlint DEPLOY.md
-
-integration-tests: ## server and check the localhost
+# Create an archive file containing the dist/ directory
+package: ## Create an archive file containing the dist/ directory
 	hugo
-	ls dist/
+	zip -r awesome-website.zip dist/
 
-unit-tests: ## Runs different makefile recipes
-	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
-	make build
-	make clean
+# Lint the README.md and DEPLOY.md files
+lint: ## Lint the README.md and DEPLOY.md files
+	markdownlint README.md && markdownlint DEPLOY.md
 
-validate: ## Tests dir
-	pwd
+# Unit-tests the files
+unit-tests: ## Unittest the files
+	ls
 
-package: ## creates archive
-	make build
-	zip awesome-website.zip dist/	
+# Validate the files
+validate: ## Validate the files
+	ls
 
-help: ## Display the list of targets and their usage.
-	cat Makefile | grep '##' | tr -d '##' | head -n -1
+# Integration-tests the files
+integration-tests: ## Integration-tests the files
+	ls
+
+# Set default target
+.PHONY: build clean post package lint unit-tests validate integration-tests
