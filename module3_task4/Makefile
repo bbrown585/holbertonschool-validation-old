@@ -1,39 +1,40 @@
-build: ## Builds a new website
+# Define variables
+Publish=hugo
+SHELLCHECK=shellcheck
+
+build: ### Build
+	$(Publish)
+
+clean: ### Clean
+	rm -r dist/*
+
+post: ## Post
+	$(Publish) new posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
+
+lint: ### Lint
+	markdownlint DEPLOY.md
+	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+
+markdownlint: ### Markdown
+	markdownlint README.md
+	markdownlint DEPLOY.md
+
+integration-tests: ## Integration tests
 	hugo
+	ls dist/
 
-run: ## Runs the application in background
-	./awesome-api >./awesome.log 2>&1 &
+unit-tests: ## Unit tests
+	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
+	make build
+	make clean
 
-stop: ## Stops the application
-	@kill $(shell pgrep awesome-api) 2>&1 &
-
-clean: ## Delete
-	make stop
-	-rm -r awesome-api 2>&1 &
-	-rm -r awesome.log 2>&1 &
-	-rm -r coverage-integrations.out
-	-rm -r coverage-units.out
-
-test: ## Tests the application
-	make unit-tests
-	make unit-tests
-
-lint: ## make lint on the files
-	shellcheck setup.sh >/dev/null 2>&1 || echo "Lint Failed"
-
-unit-tests: ## make unit tests on the files
-	go test -v -short -coverprofile=coverage-units.out || echo $1
-
-integration-tests: ## make unit tests on the files
-	go test -v -run ^main_integration_test.go -coverprofile=coverage-integrations.out || echo $1
-
-validate: ## make unit tests on the files
+validate: ## validate	
 	pwd
-run: ## make unit tests on the files
 
-post: ## Post the website
-	hugo new posts/$(POST_NAME).md
-	sed -i '2s/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md >/dev/null 2>&1
-.SILENT:
-help: ## implemente and print a list of all the goals
-	fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+package: ## package	
+	make build
+	zip awesome-website.zip dist/	
+
+help: ## help
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
