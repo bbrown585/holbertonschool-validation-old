@@ -1,9 +1,5 @@
-# Define variables
-Publish=hugo
-SHELLCHECK=shellcheck
-
 build: ## Builds a new website
-	$(Publish)
+	hugo
 
 run: ## Runs the application in background
 	./awesome-api >./awesome.log 2>&1 &
@@ -23,7 +19,7 @@ test: ## Tests the application
 	make unit-tests
 
 lint: ## make lint on the files
-	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+	shellcheck setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 unit-tests: ## make unit tests on the files
 	go test -v -short -coverprofile=coverage-units.out || echo $1
