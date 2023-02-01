@@ -9,12 +9,7 @@ post: ## Post
 	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
 lint: ### Lint
-	markdownlint DEPLOY.md
-<<<<<<< HEAD
-	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed" 
-=======
-	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
->>>>>>> 737ab75ceaad8eef3e5bddc0de8e199dc820ff1c
+	markdownlint DEPLOY.md && markdownlint README.md
 
 markdownlint: ### Markdown
 	markdownlint README.md && markdownlint DEPLOY.md
