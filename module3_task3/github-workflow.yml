@@ -1,6 +1,6 @@
 ---
 name: module3_task3
-on:
+"on":
   push:
     branches: [main, master]
   schedule:

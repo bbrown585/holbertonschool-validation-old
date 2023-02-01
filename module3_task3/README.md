@@ -1,6 +1,3 @@
-<h1>Module 3: Continuous Integration / Continuous Deployment</h1>
-<h2>Brandon Brown</h2>
-
 # HolbertonSchool-Validation
 
 ## Prerequisites
@@ -10,11 +7,11 @@
 
 ## Workflow
 
-You are expected to create a new [workflow](https://docs.github.com/en/actions) 
+You are expected to create a new [workflow](https://docs.github.com/en/actions)
 named `module3_task0` with only the following steps:
 
 - Clone the repository,
-- Position yourself in the correct directory and execute the command `make help` 
+- Position yourself in the correct directory and execute the command `make help`
 to validate that the Makefile is present and implements the help target.
 
 This workflow must be [triggered](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows):

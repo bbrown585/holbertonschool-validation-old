@@ -15,4 +15,7 @@ rm ./install_hugo.deb
 sudo apt install zip
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.5.linux-amd64.tar.gz
 export PATH=/usr/local/go/bin:$PATH
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7c3f3dd64dea1b9b4fc45731e30fd1e89458658

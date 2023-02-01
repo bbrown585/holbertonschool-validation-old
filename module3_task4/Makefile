@@ -17,8 +17,7 @@ lint: ### Lint
 >>>>>>> 737ab75ceaad8eef3e5bddc0de8e199dc820ff1c
 
 markdownlint: ### Markdown
-	markdownlint README.md
-	markdownlint DEPLOY.md
+	markdownlint README.md && markdownlint DEPLOY.md
 
 integration-tests: ## Integration tests
 	hugo
