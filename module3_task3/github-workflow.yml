@@ -1,6 +1,6 @@
 ---
 name: module3_task3
-on:
+"on":
   push:
     branches: [main, master]
   schedule:
@@ -49,4 +49,3 @@ jobs:
         with:
           name: upload-package
           path: module3_task3/awesome-website.zip
-
