@@ -1,5 +1,5 @@
 build: ### Build
-	hugo --destination dist
+	hugo
 
 clean: ### Clean
 	rm -r ./dist
@@ -10,7 +10,11 @@ post: ## Post
 
 lint: ### Lint
 	markdownlint DEPLOY.md
+<<<<<<< HEAD
 	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed" 
+=======
+	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+>>>>>>> 737ab75ceaad8eef3e5bddc0de8e199dc820ff1c
 
 markdownlint: ### Markdown
 	markdownlint README.md
