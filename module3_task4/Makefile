@@ -13,8 +13,7 @@ lint: ### Lint
 	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 markdownlint: ### Markdown
-	markdownlint README.md
-	markdownlint DEPLOY.md
+	markdownlint README.md && markdownlint DEPLOY.md
 
 integration-tests: ## Integration tests
 	hugo
