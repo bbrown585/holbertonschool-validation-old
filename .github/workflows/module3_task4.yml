@@ -31,6 +31,7 @@ jobs:
       - name: Validate Makefile help
         run: |
           cd module3_task4
+          ./setup.sh
           make lint
           make build
           make package
