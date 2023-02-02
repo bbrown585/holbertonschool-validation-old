@@ -23,13 +23,14 @@ jobs:
         with:
           node-version: 16
       - name: install hugo
-        run: cd module3_task4 && ./setup.sh
+        run: |
+          cd module3_task4/ 
+          sudo ./setup.sh
       - name: install markdown
         run: npm install -g markdownlint-cli
       - name: Validate Makefile help
         run: |
           cd module3_task4/
-          sudo ./setup.sh
           make lint
           make build
           make package
