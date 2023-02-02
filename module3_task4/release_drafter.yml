@@ -1,6 +1,6 @@
 ---
-triggers: 
-    on push:
+triggers:
+on push:
 name-template: 'v$RESOLVED_VERSION 🌈'
 tag-template: 'v$RESOLVED_VERSION'
 categories:
