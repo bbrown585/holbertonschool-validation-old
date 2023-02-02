@@ -1,6 +1,4 @@
 ---
-env:
-  GH_TOKEN: ${{ github.token }}
 name: module3_task4
 "on":
   push:
@@ -15,7 +13,7 @@ name: module3_task4
 
 jobs:
   builds:
-    permissions: write-all
+   ## permissions: write-all
     name: job1
     runs-on: ubuntu-18.04
 
@@ -25,13 +23,14 @@ jobs:
         with:
           node-version: 16
       - name: install hugo
-        run: cd module3_task4 && ./setup.sh
+        run: |
+          cd module3_task4/ 
+          sudo ./setup.sh
       - name: install markdown
         run: npm install -g markdownlint-cli
       - name: Validate Makefile help
         run: |
-          cd module3_task4
-          ./setup.sh
+          cd module3_task4/
           make lint
           make build
           make package

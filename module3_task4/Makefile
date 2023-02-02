@@ -1,5 +1,9 @@
+# Define 
+Publish=hugo
+SHELLCHECK=shellcheck
+
 build: ### Build
-	hugo
+	$(Publish)
 
 clean: ### Clean
 	rm -r ./dist
