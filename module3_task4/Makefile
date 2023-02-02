@@ -1,5 +1,5 @@
 build: ### Build
-	@hugo
+	hugo
 
 clean: ### Clean
 	rm -r ./dist
