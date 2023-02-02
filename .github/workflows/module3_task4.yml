@@ -1,6 +1,4 @@
 ---
-env:
-  GH_TOKEN: ${{ github.token }}
 name: module3_task4
 "on":
   push:
@@ -15,7 +13,7 @@ name: module3_task4
 
 jobs:
   builds:
-    permissions: write-all
+   ## permissions: write-all
     name: job1
     runs-on: ubuntu-18.04
 
