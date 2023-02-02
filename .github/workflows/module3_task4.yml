@@ -12,7 +12,6 @@ name: module3_task4
   pull_request:
     types: [opened, reopened, synchronize]
 
-permissions: read-all
 
 jobs:
   builds:
