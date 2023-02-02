@@ -28,8 +28,8 @@ jobs:
         run: npm install -g markdownlint-cli
       - name: Validate Makefile help
         run: |
-          cd module3_task4
-          ./setup.sh
+          cd module3_task4/
+          sudo ./setup.sh
           make lint
           make build
           make package
