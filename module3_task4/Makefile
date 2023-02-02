@@ -31,4 +31,4 @@ package: ## package
 	zip awesome-website.zip dist/	
 
 help: ## help
-	README.md
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
