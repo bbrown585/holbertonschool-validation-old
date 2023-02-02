@@ -38,7 +38,7 @@ test:	## Tests API using go test
 	make integration-tests
 
 lint:	## Lints all the go files using golangci-lint
-	markdownlint README.md DEPLOY.md
+	markdownlint README.md && markdownlint DEPLOY.md
 
 unit-tests:	## Runs implemented unit test using go test
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster go test -v -short -coverprofile=coverage-units.out
