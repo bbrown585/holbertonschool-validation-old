@@ -1,7 +1,7 @@
 ---
 
 name: module3_task5
-on:
+"on":
   push:
     branch:
       - 'main'
