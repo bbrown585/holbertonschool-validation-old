@@ -31,7 +31,7 @@ stop:	## Terminates the execution of awesome-api
 
 clean:	## Removes binary and logs
 	rm -r dist/*
-	rm awesome-api
+	rm ./awesome-api
 
 test:	## Tests API using go test
 	-make build
