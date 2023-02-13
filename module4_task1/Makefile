@@ -30,8 +30,7 @@ stop:	## Terminates the execution of awesome-api
 	kill $(shell pgrep awesome-api)
 
 clean:	## Removes binary and logs
-	-make stop
-	-rm -rf awesome-api awesome.log coverage* go* awesome-website.zip ./dist
+	rm -r dist/*
 
 test:	## Tests API using go test
 	-make build
