@@ -5,9 +5,9 @@ hugo-build:		## Builds a website using gohugo on the dist folder
 	hugo
 
 build:	## Builds all that is needed for website
-	@sudo apt install ./hugo.deb
-	@hugo
-	touch awesome-api
+	sudo apt install ./hugo.deb
+	hugo
+
 
 post:		## Create a new blog post whose filename and title come from the environment variables POST_TITLE and POST_NAME
 	hugo new posts/${POST_NAME}.md
