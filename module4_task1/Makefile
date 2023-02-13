@@ -39,7 +39,13 @@ test:	## Tests API using go test
 	make integration-tests
 
 lint:	## Lints all the go files using golangci-lint
-	markdownlint README.md && markdownlint DEPLOY.md
+	apt install curl -y
+	curl --silent --location https://deb.nodesource.com/setup_16.x | bash -
+	apt install nodejs -y
+	npm install -g markdownlint-cli 1>&2
+	markdownlint README.md
+	markdownlint DEPLOY.md
+
 
 unit-tests:	## Runs implemented unit test using go test
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster go test -v -short -coverprofile=coverage-units.out
@@ -49,7 +55,7 @@ integration-tests:	## Runs integration test using go test
 
 package:  ## Generates a zip archive to deployment
 	-make build
-	
+
 build-docker: ## Build docker image
 			docker build -t "awesome:build" ./build
 
