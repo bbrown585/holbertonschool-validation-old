@@ -134,3 +134,4 @@ set from the ENV variables
 `help`:
 Prints out information of the commands to the terminal.
 `build-docker`: Build
+`docker-tests`: Build
