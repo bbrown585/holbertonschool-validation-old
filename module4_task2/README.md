@@ -133,4 +133,4 @@ Creates a new post in the contents/post folder with POST_TITLE and POST_NAME
 set from the ENV variables
 `help`:
 Prints out information of the commands to the terminal.
-`docker-build`: Build
+`build-docker`: Build
