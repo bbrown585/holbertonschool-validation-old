@@ -6,7 +6,7 @@ hugo-build:		## Builds a website using gohugo on the dist folder
 
 build:	## Builds all that is needed for website
 	sudo apt install ./hugo.deb
-	hugo
+	hugo ./dist
 
 
 post:		## Create a new blog post whose filename and title come from the environment variables POST_TITLE and POST_NAME
