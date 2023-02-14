@@ -4,6 +4,8 @@ npm install -g n
 n 16.0.0
 hash -r
 npm install -g markdownlint-cli -g
+brew install hadolint
+brew install container-structure-test
 npm install netlify-cli -g
 apt-get install curl -y
 npm install npm@latest -g -y
