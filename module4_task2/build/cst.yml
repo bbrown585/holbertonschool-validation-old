@@ -4,4 +4,4 @@ commandTests:
   - name: "hugo installed"
     command: "which"
     args: ["hugo"]
-    expectedOutput: ["/opt/homebrew/bin/hugo"]
+    expectedOutput: ["/usr/local/bin/hugo"]
