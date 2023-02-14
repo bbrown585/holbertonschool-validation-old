@@ -44,6 +44,9 @@ lint:	## Lints all the go files using golangci-lint
 	npm install -g markdownlint-cli 1>&2
 	markdownlint README.md
 	markdownlint DEPLOY.md
+	hadolint <Dockerfile>
+	hadolint --ignore DL3003 --ignore DL3006 <Dockerfile> # exclude specific rules
+	hadolint --trusted-registry my-company.com:500 <Dockerfile> # Warn when using untrusted FROM images
 
 
 unit-tests:	## Runs implemented unit test using go test
@@ -56,11 +59,11 @@ package:  ## Generates a zip archive to deployment
 	-make build
 
 build-docker: ## Build docker image
-			docker build -t "awesome:build" ./build
+	docker build -t "awesome:build" ./build
 
 .PHONY: build-dependencies
 build-dependencies: ## Build docker dependences
-			@sudo apt install ./hugo.deb
+	sudo apt install ./hugo.deb
 
 help:	## Show this help message
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
