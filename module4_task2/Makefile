@@ -38,15 +38,9 @@ test:	## Tests API using go test
 	make integration-tests
 
 lint:	## Lints all the go files using golangci-lint
-	apt install curl -y
-	curl --silent --location https://deb.nodesource.com/setup_16.x | bash -
-	apt install nodejs -y
-	npm install -g markdownlint-cli 1>&2
-	markdownlint README.md
-	markdownlint DEPLOY.md
-	hadolint <Dockerfile>
-	hadolint --ignore DL3003 --ignore DL3006 <Dockerfile> # exclude specific rules
-	hadolint --trusted-registry my-company.com:500 <Dockerfile> # Warn when using untrusted FROM images
+	make build-docker
+	docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build markdownlint README.md DEPLOY.md
+	docker run --rm --volume=$(shell pwd):/app --workdir=/app hadolint/hadolint hadolint build/Dockerfile
 
 
 unit-tests:	## Runs implemented unit test using go test
