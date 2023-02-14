@@ -5,8 +5,8 @@ hugo-build:		## Builds a website using gohugo on the dist folder
 	hugo
 
 build:	## Builds all that is needed for website
-	sudo apt install ./hugo.deb
-	hugo ./dist
+	make go-build
+	make hugo-build
 
 
 post:		## Create a new blog post whose filename and title come from the environment variables POST_TITLE and POST_NAME
@@ -54,7 +54,7 @@ integration-tests:	## Runs integration test using go test
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster go test -v -coverprofile=coverage-integrations.out
 
 package:  ## Generates a zip archive to deployment
-	-make build ./dist
+	-make build
 
 build-docker: ## Build docker image
 			docker build -t "awesome:build" ./build
