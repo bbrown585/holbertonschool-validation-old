@@ -61,9 +61,9 @@ package:  ## Generates a zip archive to deployment
 build-docker: ## Build docker image
 	docker build -t "awesome:build" ./build
 
-.PHONY: build-dependencies
-build-dependencies: ## Build docker dependences
-	sudo apt install ./hugo.deb
+docker-tests:	## Test the generated docker image using container-structure-test and cst.yml config file
+	-make build-docker
+	container-structure-test test --image awesome:build --config build/cst.yml
 
 help:	## Show this help message
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
