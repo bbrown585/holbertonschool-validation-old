@@ -53,7 +53,8 @@ integration-tests:	## Runs integration test using go test
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster go test -v -coverprofile=coverage-integrations.out
 
 package:  ## Generates a zip archive to deployment
-	-make build
+	make build
+	mkdir -p dist
 
 build-docker: ## Build docker image
 	docker build -t "awesome:build" ./build
