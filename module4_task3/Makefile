@@ -1,3 +1,7 @@
+IMAGE_TAG=$(shell git tag | tail -n 1)
+ifeq ($(strip $(IMAGE_TAG)),)
+IMAGE_TAG=$(shell git rev-parse --abbrev-ref HEAD)
+endif
 go-build:	## Builds the API binary file using go
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster /bin/bash -c "go mod init github.com/bbrown585/awesome-api && go get github.com/gorilla/mux && go build"
 
@@ -33,17 +37,16 @@ clean:	## Removes binary and logs
 	make stop
 
 test:	## Tests API using go test
-	-make build
+	make build
 	make unit-tests
 	make integration-tests
 
 lint:	## Lints all the go files using golangci-lint
-	apt install curl -y
-	curl --silent --location https://deb.nodesource.com/setup_16.x | bash -
-	apt install nodejs -y
-	npm install -g markdownlint-cli 1>&2
-	markdownlint README.md
-	markdownlint DEPLOY.md
+	make build-docker
+	docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build markdownlint README.md DEPLOY.md
+	docker run --rm --volume=$(shell pwd):/app --workdir=/app hadolint/hadolint hadolint build/Dockerfile
+	docker run --rm --volume=$(shell pwd):/app --workdir=/app hadolint/hadolint hadolint Dockerfile
+
 
 
 unit-tests:	## Runs implemented unit test using go test
@@ -53,7 +56,9 @@ integration-tests:	## Runs integration test using go test
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster go test -v -coverprofile=coverage-integrations.out
 
 package:  ## Generates a zip archive to deployment
-	-make build
+	docker build -t awesome:${IMAGE_TAG} .
+	docker save -o awesome_image.tar awesome:${IMAGE_TAG}
+	zip awesome-website.zip awesome-api dist/ awesome_image.t
 
 build-docker: ## Build docker image
 			docker build -t "awesome:build" ./build
