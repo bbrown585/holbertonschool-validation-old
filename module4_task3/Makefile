@@ -58,7 +58,6 @@ integration-tests:	## Runs integration test using go test
 package:  ## Generates a zip archive to deployment
 	docker build -t awesome:${IMAGE_TAG} .
 	docker save -o awesome_image.tar awesome:${IMAGE_TAG}
-	zip awesome-website.zip awesome-api dist/ awesome_image.t
 
 build-docker: ## Build docker image
 			docker build -t "awesome:build" ./build
