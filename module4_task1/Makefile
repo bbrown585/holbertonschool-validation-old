@@ -6,8 +6,7 @@ go-build:	## Builds the API binary file using go
 
 
 build:	## Builds all that is needed for website
-	make go-build
-	make hugo-build
+	hugo
 	
 
 post:		## Create a new blog post whose filename and title come from the environment variables POST_TITLE and POST_NAME
