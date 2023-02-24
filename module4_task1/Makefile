@@ -20,7 +20,7 @@ check:  ## Lints and check for dead links on markdowns using markdownlint-cli an
 validate: ## Validates dist/index.html using W3C Hbtn validator
 	-make build
 	-git clone https://github.com/holbertonschool/W3C-Validator.git
-	-./W3C-Validator/w3c_validator.py ./dist/index.html
+	-./W3C-Validator/w3c_validator.py
 	-rm -rf ./W3C-Validator
 
 run:	## Runs the built binary and send everything to awesome.log
