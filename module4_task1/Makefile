@@ -55,7 +55,7 @@ integration-tests:	## Runs integration test using go test
 
 package:  ## Generates a zip archive to deployment
 	make build
-	mkdir -p dist
+	zip awesome-website.zip awesome-api dist/
 
 build-docker: ## Build docker image
 	docker build -t "awesome:build" ./build
