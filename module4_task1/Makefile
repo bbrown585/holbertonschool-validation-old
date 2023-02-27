@@ -1,5 +1,5 @@
 hugo-build:		## Builds a website using gohugo on the dist folder
-	hugo 
+	docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build hugo
 
 go-build:	## Builds the API binary file using go
 	if [[ $PWD != /app ]]; then
@@ -55,7 +55,7 @@ integration-tests:	## Runs integration test using go test
 
 package:  ## Generates a zip archive to deployment
 	make build
-	zip awesome-website.zip awesome-api dist/
+	mkdir -p dist
 
 build-docker: ## Build docker image
 	docker build -t "awesome:build" ./build
