@@ -1,3 +1,4 @@
+.PHONY: build
 hugo-build:		## Builds a website using gohugo on the dist folder
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build hugo
 
