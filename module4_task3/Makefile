@@ -34,7 +34,7 @@ stop:	## Terminates the execution of awesome-api
 	kill $(shell pgrep awesome-api)
 
 clean:	## Removes binary and logs
-	make stop
+	make docker stop
 
 test:	## Tests API using go test
 	make build
