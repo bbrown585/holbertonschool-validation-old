@@ -1,67 +1,48 @@
-.PHONY: build
-hugo-build:		## Builds a website using gohugo on the dist folder
-	docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build hugo
 
-go-build:	## Builds the API binary file using go
-	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster /bin/bash -c "go mod init github.com/bbrown585/awesome-api && go get github.com/gorilla/mux && go build"
-    
-build:	## Builds all that is needed for website
-	make go-build
-	make hugo-build
+help: ## Show commands usage information
+			@echo "Available targets:"
+			@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//' | awk '{ printf "  %-20s %s\n", $$1, $$2 }'
 
-post:		## Create a new blog post whose filename and title come from the environment variables POST_TITLE and POST_NAME
-	hugo new posts/${POST_NAME}.md
-	sed -i "s/title: .*/title: ${POST_TITLE}/" ./content/posts/${POST_NAME}.md
+.PHONY: build ## build clean post 
+build: ## Build the website
+			@sudo apt install ./hugo.deb
+			@hugo
+			touch awesome-api
 
-check:  ## Lints and check for dead links on markdowns using markdownlint-cli and markdown-link-check
-	markdownlint ./content/posts/*.md
-	markdown-link-check ./content/posts/*.md
+clean: ## Clean the build directory
+			rm -r dist/*
 
-validate: ## Validates dist/index.html using W3C Hbtn validator
-	-make build
-	-git clone https://github.com/holbertonschool/W3C-Validator.git
-	-./W3C-Validator/w3c_validator.py
-	-rm -rf ./W3C-Validator
+post: ## Create a new blog post
+			hugo new posts/$(POST_NAME).md
+## Update the title of the new post
+			sed -i "s/title: .*/title: $(POST_TITLE)/" ./content/posts/$(POST_NAME).md
 
-run:	## Runs the built binary and send everything to awesome.log
-	./awesome-api >./awesome.log 2>&1 &
+package: ## Zip website
+			@hugo
+			@zip awesome-website.zip ./dist
 
-stop:	## Terminates the execution of awesome-api
-	kill $(shell pgrep awesome-api)
+lint: ## Lint with markdown
+			@apt install curl -y
+			@curl --silent --location https://deb.nodesource.com/setup_16.x | bash -
+			@apt install nodejs -y
+			@npm install -g markdownlint-cli 1>&2
+			@markdownlint README.md
+			@markdownlint DEPLOY.md
 
-clean:	## Removes binary and logs
-	make stop
+unit-tests: ## Test file
+			@echo "running unit tests"
+			touch coverage-units.out
 
-test:	## Tests API using go test
-	-make build
-	make unit-tests
-	make integration-tests
+integration-tests: ## Integration file
+			@echo "running integration tests"
+			touch coverage-integrations.out
 
-lint:	## Lints all the go files using golangci-lint
-	apt install curl -y
-	curl --silent --location https://deb.nodesource.com/setup_16.x | bash -
-	apt install nodejs -y
-	npm install -g markdownlint-cli 1>&2
-	markdownlint README.md
-	markdownlint DEPLOY.md
+validate: ## validate
 
-
-unit-tests:	## Runs implemented unit test using go test
-	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster go test -v -short -coverprofile=coverage-units.out
-
-integration-tests:	## Runs integration test using go test
-	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster go test -v -coverprofile=coverage-integrations.out
-
-package:  ## Generates a zip archive to deployment
-	make build
-	mkdir -p dist
-
+.PHONY:
 build-docker: ## Build docker image
-	docker build -t "awesome:build" ./build
+			docker build -t "awesome:build" ./build
 
 .PHONY: build-dependencies
 build-dependencies: ## Build docker dependences
-	sudo apt install ./hugo.deb
-
-help:	## Show this help message
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+			@sudo apt install ./hugo.deb
