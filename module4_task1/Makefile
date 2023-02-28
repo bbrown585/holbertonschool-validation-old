@@ -3,7 +3,8 @@ hugo-build:		## Builds a website using gohugo on the dist folder
 	docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build hugo
 
 go-build:	## Builds the API binary file using go
-	docker run --rm --volume=$(shell pwd):/app --workdir=/app golang:1.15.8-buster /bin/bash -c "go mod init github.com/bbrown585/awesome-api && go get github.com/gorilla/mux && go build"
+	docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build /bin/bash -c "go mod init github.com/Apinedas/awesome-api && go get github.com/gorilla/mux && go build"
+
     
 build:	## Builds all that is needed for website
 	make go-build
